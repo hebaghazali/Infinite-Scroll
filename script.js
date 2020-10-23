@@ -7,7 +7,7 @@ let totalImages = 0;
 let photosArray = [];
 
 // Unsplash API
-const initialCount = 10;
+const initialCount = 15;
 const count = 40;
 const apiKey = 'ju8W-mmQ9K3JKg--iAjXxl5PJU5_jAq2kgoyG5F56vQ';
 let apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${initialCount}`;
@@ -35,38 +35,43 @@ function displayPhotos() {
 
   // Run function for each object in photosArray
   photosArray.forEach(photo => {
-    // Create <a> to link to Unsplash
-    const item = document.createElement('a');
-    setAttributes(item, {
-      href: photo.links.html,
-      target: '_blank',
-    });
+    // Trying to standardize the size as much as possible using the if condition
+    if (photo.height > photo.width) {
+      // Create <a> to link to Unsplash
+      const item = document.createElement('a');
+      setAttributes(item, {
+        href: photo.links.html,
+        target: '_blank',
+      });
 
-    // Create <img> for photo
-    const img = document.createElement('img');
-    setAttributes(img, {
-      src: photo.urls.regular,
-      alt: photo.alt_description,
-      title: photo.alt_description,
-    });
+      // Create <img> for photo
+      const img = document.createElement('img');
+      setAttributes(img, {
+        src: photo.urls.thumb,
+        alt: photo.alt_description,
+        title: photo.alt_description,
+      });
 
-    // Create a figure caption to show location of photo
-    const figure = document.createElement('figure');
-    const figcaption = document.createElement('figcaption');
+      // Create a figure caption to show location of photo
+      const figure = document.createElement('figure');
+      const figcaption = document.createElement('figcaption');
 
-    if (photo.location.name !== null) {
-      figcaption.innerText = `${photo.location.name}`;
-      figcaption.href = '#';
+      if (photo.location.name !== null) {
+        figcaption.innerText = `${photo.location.name}`;
+        figcaption.href = '#';
+      }
+
+      // Event listener, check when each is finished loading
+      img.addEventListener('load', imageLoaded);
+
+      // Put <img> inside <a>, then put both inside imageContainer Element
+      figure.appendChild(img);
+      figure.appendChild(figcaption);
+      item.appendChild(figure);
+      imageContainer.appendChild(item);
+    } else {
+      imageLoaded();
     }
-
-    // Event listener, check when each is finished loading
-    img.addEventListener('load', imageLoaded);
-
-    // Put <img> inside <a>, then put both inside imageContainer Element
-    figure.appendChild(img);
-    figure.appendChild(figcaption);
-    item.appendChild(figure);
-    imageContainer.appendChild(item);
   });
 }
 
