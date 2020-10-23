@@ -21,7 +21,6 @@ h1 {
 }
 
 /* Loader */
-
 .loader {
   position: fixed;
   top: 0;
@@ -41,17 +40,22 @@ h1 {
 /* Image Container */
 .image-container {
   margin: 10px 5%; 
-  columns: 3;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
 .image-container img {
   width: 100%;
   border-radius: 5px;
   margin-top: 5px;
+}
+
+.image-container a {
   transition: 1s transform ease-in-out;
 }
 
-.image-container img:hover {
+.image-container a:hover {
   transform: scale(1.1);
 }
 
@@ -64,10 +68,6 @@ figcaption {
 
 /* Media Query: Tablets */
 @media screen and (max-width: 1240px) {
-  .image-container {
-    margin: 10px 5%; 
-    columns: 2;
-  }
   figure {
     margin: auto 10px;
   }
@@ -79,11 +79,6 @@ figcaption {
     font-size: 25px;
   }
   
-  .image-container {
-    margin: 10px;
-    columns: 1;
-  }
-
   figcaption {
     font-size: 15px;
   }

@@ -28,7 +28,6 @@ function setAttributes(element, attributes) {
     element.setAttribute(key, attributes[key]);
   }
 }
-
 // Create Elements For Links & Photos, Add to DOM
 function displayPhotos() {
   imagesLoaded = 0;
@@ -54,7 +53,7 @@ function displayPhotos() {
     // Create a figure caption to show location of photo
     const figure = document.createElement('figure');
     const figcaption = document.createElement('figcaption');
-    figcaption.classList.add('disabled');
+
     if (photo.location.name !== null) {
       figcaption.innerText = `${photo.location.name}`;
       figcaption.href = '#';
