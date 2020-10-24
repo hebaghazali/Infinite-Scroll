@@ -32,13 +32,6 @@ function requestError() {
   imageContainer.insertAdjacentElement('afterend', h3);
 }
 
-// Helper Function to Set Attributes on DOM Elements
-function setAttributes(element, attributes) {
-  for (const key in attributes) {
-    element.setAttribute(key, attributes[key]);
-  }
-}
-
 // Create Elements For Links & Photos, Add to DOM
 function displayPhotos() {
   imagesLoaded = 0;
@@ -51,18 +44,14 @@ function displayPhotos() {
       if (photo.width / photo.height < 0.67) {
         // Create <a> to link to Unsplash
         const item = document.createElement('a');
-        setAttributes(item, {
-          href: photo.links.html,
-          target: '_blank',
-        });
+        item.href = photo.links.html;
+        item.target = '_blank';
 
         // Create <img> for photo
         const img = document.createElement('img');
-        setAttributes(img, {
-          src: photo.urls.thumb,
-          alt: photo.alt_description,
-          title: photo.alt_description,
-        });
+        img.src = photo.urls.thumb;
+        img.alt = photo.alt_description;
+        img.title = photo.alt_description;
 
         // Create a figure caption to show location of photo
         const figure = document.createElement('figure');
