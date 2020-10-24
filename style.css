@@ -41,8 +41,11 @@ h1 {
 .image-container {
   margin: 10px 5%; 
   display: grid;
-  grid-gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+figure {
+  margin: 0.1rem 1rem;
 }
 
 .image-container img {
@@ -66,14 +69,8 @@ figcaption {
   text-decoration: none;
 }
 
-/* Media Query: Tablets */
-@media screen and (max-width: 1240px) {
-  figure {
-    margin: auto 10px;
-  }
-}
 
-/* Large Smartphone */
+/* Media Query: Large Smartphone */
 @media screen and (max-width: 678px) {
   h1 {
     font-size: 25px;

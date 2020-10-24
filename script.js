@@ -7,7 +7,7 @@ let totalImages = 0;
 let photosArray = [];
 
 // Unsplash API
-const initialCount = 15;
+const initialCount = 20;
 const count = 40;
 const apiKey = 'ju8W-mmQ9K3JKg--iAjXxl5PJU5_jAq2kgoyG5F56vQ';
 let apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${initialCount}`;
@@ -81,7 +81,7 @@ async function getPhotos() {
     const response = await fetch(apiUrl);
     photosArray = await response.json();
     displayPhotos();
-    console.log(photosArray);
+    // console.log(photosArray);
   } catch (error) {
     // Catch Error Here
   }
