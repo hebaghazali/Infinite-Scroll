@@ -8,7 +8,7 @@ let photosArray = [];
 
 // Unsplash API
 const initialCount = 20;
-const count = 40;
+const count = 50;
 const apiKey = 'ju8W-mmQ9K3JKg--iAjXxl5PJU5_jAq2kgoyG5F56vQ';
 let apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${initialCount}`;
 
@@ -22,12 +22,23 @@ function imageLoaded() {
   }
 }
 
+// Show API error message
+function requestError() {
+  loader.hidden = true;
+  const h3 = document.createElement('h3');
+  h3.innerText =
+    'Oops, we ran out of requests. Please wait for the next hour to get more.';
+  h3.style.textAlign = 'center';
+  imageContainer.insertAdjacentElement('afterend', h3);
+}
+
 // Helper Function to Set Attributes on DOM Elements
 function setAttributes(element, attributes) {
   for (const key in attributes) {
     element.setAttribute(key, attributes[key]);
   }
 }
+
 // Create Elements For Links & Photos, Add to DOM
 function displayPhotos() {
   imagesLoaded = 0;
@@ -35,42 +46,47 @@ function displayPhotos() {
 
   // Run function for each object in photosArray
   photosArray.forEach(photo => {
-    // Standardize the size as much as possible using the if condition
-    if (photo.width / photo.height < 0.67) {
-      // Create <a> to link to Unsplash
-      const item = document.createElement('a');
-      setAttributes(item, {
-        href: photo.links.html,
-        target: '_blank',
-      });
+    try {
+      // Standardize the size as much as possible using the if condition
+      if (photo.width / photo.height < 0.67) {
+        // Create <a> to link to Unsplash
+        const item = document.createElement('a');
+        setAttributes(item, {
+          href: photo.links.html,
+          target: '_blank',
+        });
 
-      // Create <img> for photo
-      const img = document.createElement('img');
-      setAttributes(img, {
-        src: photo.urls.thumb,
-        alt: photo.alt_description,
-        title: photo.alt_description,
-      });
+        // Create <img> for photo
+        const img = document.createElement('img');
+        setAttributes(img, {
+          src: photo.urls.thumb,
+          alt: photo.alt_description,
+          title: photo.alt_description,
+        });
 
-      // Create a figure caption to show location of photo
-      const figure = document.createElement('figure');
-      const figcaption = document.createElement('figcaption');
+        // Create a figure caption to show location of photo
+        const figure = document.createElement('figure');
+        const figcaption = document.createElement('figcaption');
 
-      if (photo.location.name !== null) {
-        figcaption.innerText = `${photo.location.name}`;
-        figcaption.href = '#';
+        if (photo.location.name !== null) {
+          figcaption.innerText = `${photo.location.name}`;
+          figcaption.href = '#';
+        }
+
+        // Event listener, check when each is finished loading
+        img.addEventListener('load', imageLoaded);
+
+        // Put <img> inside <a>, then put both inside imageContainer Element
+        figure.appendChild(img);
+        figure.appendChild(figcaption);
+        item.appendChild(figure);
+        imageContainer.appendChild(item);
+      } else {
+        imageLoaded();
       }
-
-      // Event listener, check when each is finished loading
-      img.addEventListener('load', imageLoaded);
-
-      // Put <img> inside <a>, then put both inside imageContainer Element
-      figure.appendChild(img);
-      figure.appendChild(figcaption);
-      item.appendChild(figure);
-      imageContainer.appendChild(item);
-    } else {
-      imageLoaded();
+    } catch (error) {
+      // ready = false;
+      requestError();
     }
   });
 }
@@ -83,7 +99,8 @@ async function getPhotos() {
     displayPhotos();
     // console.log(photosArray);
   } catch (error) {
-    // Catch Error Here
+    // ready = false;
+    requestError();
   }
 }
 
