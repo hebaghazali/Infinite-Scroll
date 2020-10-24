@@ -35,8 +35,8 @@ function displayPhotos() {
 
   // Run function for each object in photosArray
   photosArray.forEach(photo => {
-    // Trying to standardize the size as much as possible using the if condition
-    if (photo.height > photo.width) {
+    // Standardize the size as much as possible using the if condition
+    if (photo.width / photo.height < 0.67) {
       // Create <a> to link to Unsplash
       const item = document.createElement('a');
       setAttributes(item, {
