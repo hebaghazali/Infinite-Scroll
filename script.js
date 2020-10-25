@@ -74,7 +74,6 @@ function displayPhotos() {
         imageLoaded();
       }
     } catch (error) {
-      // ready = false;
       requestError();
     }
   });
@@ -86,9 +85,7 @@ async function getPhotos() {
     const response = await fetch(apiUrl);
     photosArray = await response.json();
     displayPhotos();
-    // console.log(photosArray);
   } catch (error) {
-    // ready = false;
     requestError();
   }
 }
