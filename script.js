@@ -41,38 +41,34 @@ function displayPhotos() {
   photosArray.forEach(photo => {
     try {
       // Standardize the size as much as possible using the if condition
-      if (photo.width / photo.height < 0.67) {
-        // Create <a> to link to Unsplash
-        const item = document.createElement('a');
-        item.href = photo.links.html;
-        item.target = '_blank';
+      // Create <a> to link to Unsplash
+      const item = document.createElement('a');
+      item.href = photo.links.html;
+      item.target = '_blank';
 
-        // Create <img> for photo
-        const img = document.createElement('img');
-        img.src = photo.urls.thumb;
-        img.alt = photo.alt_description;
-        img.title = photo.alt_description;
+      // Create <img> for photo
+      const img = document.createElement('img');
+      img.src = photo.urls.thumb;
+      img.alt = photo.alt_description;
+      img.title = photo.alt_description;
 
-        // Create a figure caption to show location of photo
-        const figure = document.createElement('figure');
-        const figcaption = document.createElement('figcaption');
+      // Create a figure caption to show location of photo
+      const figure = document.createElement('figure');
+      const figcaption = document.createElement('figcaption');
 
-        if (photo.location.name !== null) {
-          figcaption.innerText = `${photo.location.name}`;
-          figcaption.href = '#';
-        }
-
-        // Event listener, check when each is finished loading
-        img.addEventListener('load', imageLoaded);
-
-        // Put <img> inside <a>, then put both inside imageContainer Element
-        figure.appendChild(img);
-        figure.appendChild(figcaption);
-        item.appendChild(figure);
-        imageContainer.appendChild(item);
-      } else {
-        imageLoaded();
+      if (photo.location.name !== null) {
+        figcaption.innerText = `${photo.location.name}`;
+        figcaption.href = '#';
       }
+
+      // Event listener, check when each is finished loading
+      img.addEventListener('load', imageLoaded);
+
+      // Put <img> inside <a>, then put both inside imageContainer Element
+      figure.appendChild(img);
+      figure.appendChild(figcaption);
+      item.appendChild(figure);
+      imageContainer.appendChild(item);
     } catch (error) {
       requestError();
     }
