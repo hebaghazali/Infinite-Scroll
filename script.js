@@ -26,7 +26,11 @@ function imageLoaded() {
 function requestError() {
   loader.hidden = true;
   const h3 = document.createElement('h3');
-  h3.innerHTML = `<div style="color: red; font-size: 1.5rem">Oops, we ran out of requests.</div> Please wait for the next hour to get 50 more requests.`;
+  if (window.navigator.onLine) {
+    h3.innerHTML = `<div style="color: red; font-size: 1.5rem">Oops, we ran out of requests.</div> Please wait for the next hour to get 50 more requests.`;
+  } else {
+    h3.innerHTML = `<div style="color: red; font-size: 1.5rem">Please check your internet connection.`;
+  }
   h3.style.textAlign = 'center';
   h3.style.fontSize = '1rem';
   imageContainer.insertAdjacentElement('afterend', h3);
